@@ -16,26 +16,26 @@
         
     {% endblock content %}
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
-<script>
-    new Vue({
-    el: '#app',
-    data: {
-        dataallcategorie:[],
-        base_url:'',
-    },
-    delimiters:[ "${", "}"],
-    mounted(){
-        this.getdata()
-    },
-    methods:{
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                dataallcategorie:[],
+                base_url:'',
+                result:[],
+            },
+            delimiters:[ "${", "}"],
+            mounted(){
+                this.getdata()
+            },
+            methods:{
                 getdata: function(){
                     this.base_url = 'http://127.0.0.1:8000'
                     console.log('data getting')
                     axios.defaults.xsrfCookieName = 'csrftoken'
                     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-            
 
                     axios({
                         url: this.base_url+ '/graphql',
@@ -73,22 +73,19 @@
                     .then(response => {
             
                         this.result = response.data.data
-                        this.dataallcategorie = response.data.data.allCategories.edges
+                        this.dataallcategorie = result.allCategories.edges
                         console.log(this.result)
                         console.log(this.dataallcategorie)
                         // get different data
-                
-                
-                    })  
+                        
+                        })  
                     .catch((err) => {
-               
                         console.log(err);
                     })
                 },
-        }
-})
-
-</script>
+            }
+        })
+    </script>
 </body>
 
 </html>
